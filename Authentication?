@@ -1,0 +1,43 @@
+from msal import PublicClientApplication, ConfidentialClientApplication, serialize
+import requests
+
+# Application settings
+client_id = "c0b75d1b-3947-40fc-a0ee-b551b6b91cfc"
+client_secret = "65817490-f1d5-4eff-8236-20a26b79c534"
+
+# Scopes
+scopes = ["Notes.Read", "Notes.ReadWrite"]
+
+# Authority URL
+authority = "https://login.microsoftonline.com/consumers"
+
+app = PublicClientApplication(client_id=client_id, authority=authority)
+
+auth_url = app.get_authorization_request_url(
+    scopes=scopes,
+    redirect_uri=redirect_uri
+)
+
+# Redirect the user to the auth_url
+# You can use a web framework like Flask or Django to handle the redirection
+# Example with Flask:
+return redirect(auth_url)
+
+# In your Flask or Django route handling the redirect URI
+auth_code = request.args.get("code")
+
+# Exchange the authorization code for an access token
+app = ConfidentialClientApplication(
+    client_id=client_id,
+    client_credential=client_secret,
+    authority=authority
+)
+
+result = app.acquire_token_by_authorization_code(
+    auth_code,
+    scopes=scopes,
+    redirect_uri=redirect_uri
+)
+
+# Extract the access token
+access_token = result["access_token"]
