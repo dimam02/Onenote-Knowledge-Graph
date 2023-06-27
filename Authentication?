@@ -39,6 +39,8 @@ result = app.acquire_token_by_authorization_code(
     redirect_uri=redirect_uri
 )
 
+
+
 # Extract the access token
 access_token = result["access_token"]# In your Flask or Django route handling the redirect URI
 auth_code = request.args.get("code")
@@ -58,3 +60,8 @@ result = app.acquire_token_by_authorization_code(
 
 # Extract the access token
 access_token = result["access_token"]
+
+# minor change added
+# minor change again
+
+
